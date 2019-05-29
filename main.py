@@ -1,28 +1,24 @@
 #Automatic software updater for apps python script
 #Compiled by: Anton Voronov, Raven Development
 
-import urllib.request, filecmp, sys, os
+import urllib.request, filecmp, sys, os, time
 
 
 #Download check for updates file
 print("Checking for updates...")
-urllib.request.urlretrieve ("http://raven-development-update-server--antonvoronov.repl.co/software/update/sample/sampleupdate.txt", "sampleupdate.txt")
+urllib.request.urlretrieve ("http://example.com/yourupdatetestfile.txt", "sampleupdate.txt")
 
 
 #Compare it with existing file
-files = filecmp.cmp('originalupdate.txt', 'sampleupdate.txt')
+files = filecmp.cmp('originalupdate.txt', 'sampleupdate.txt', shallow=False)
 
-#Invert outputted value (for simplicities' sake)
-needup = 0
-if files == True:
-    needup = False
-else:
-    neepup = True
+
 
 #Update if neccesary
-if needup == True:
+if files == False:
     print("Updating Software...")
-    urllib.request.urlretrieve ("http://raven-development-update-server--antonvoronov.repl.co/software/download/sample/sample.py", "sample.py")
+    time.sleep(2)
+    urllib.request.urlretrieve ("http://example.com/youupdatedscript.script", "sample.py")
     os.remove("originalupdate.txt")
     os.rename("sampleupdate.txt", "originalupdate.txt")
     os.remove("run.py")
